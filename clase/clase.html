@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es-HN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="http://code.gijgo.com/1.6.1/css/gijgo.css" rel="stylesheet" type="text/css" />
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        <script src="http://code.gijgo.com/1.6.1/js/gijgo.js" type="text/javascript"></script>
+        <script src="clase.js"></script>
+
+        <title>UJCV</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1 class="display-4">Clases</h1>
+
+            <div class="row">
+                <div class="col-2">
+                    <button id="boton-agregar" class="btn btn-primary" type="button">
+                        Agregar
+                    </button>
+                </div>
+                <div class="col-6"></div>
+                <div class="col-4">
+                    <!--input id="filtro" class="form-control" type="text" placeholder="Buscar"/-->
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div id="maestro" class="list-group col-12">
+                </div>
+            </div>
+        </div>
+
+        <div id="detalle-clase" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 id="detalle-clase-titulo" class="modal-title">Clase</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body" style="max-height:520px;overflow-y:auto">
+                        <div class="form-group">
+                            <label>Código</label>
+                            <input id="detalle-clase-codigo" class="form-control" type="text" placeholder="Código" />
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input id="detalle-clase-nombre" class="form-control" type="text" placeholder="Nombre" />
+                        </div>
+                        <div class="form-group">
+                            <label>Horas</label>
+                            <input id="detalle-clase-horas" class="form-control" type="number" placeholder="Horas" />
+                        </div>
+                        <div class="form-group">
+                            <label>Unidades valorativas</label>
+                            <input id="detalle-clase-uvs" class="form-control" type="number" placeholder="UVs" />
+                        </div>
+                        <div id="detalle-clase-secciones" hidden>
+                            <h6>Secciones</h6>
+                            <div class="form-group">
+                                <button id="detalle-clase-agregar-seccion" class="btn btn-outline-primary">
+                                    <i class="material-icons">add</i>
+                                </button>
+                                &nbsp;
+                                Nueva sección
+                            </div>
+                            <div id="maestro-secciones" class="list-group">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button id="detalle-clase-aceptar" type="button" class="btn btn-primary" disabled="true">Aceptar</button>
+                        <button id="detalle-clase-cancelar" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="detalle-seccion" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 id="detalle-seccion-titulo" class="modal-title">Sección</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body" style="max-height:520px;overflow-y:auto">
+                        <div class="form-group">
+                            <label>Catedrático</label>
+                            <select id="detalle-seccion-catedratico" class="form-control">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Letra</label>
+                            <input id="detalle-seccion-letra" class="form-control" type="text" placeholder="Letra" />
+                        </div>
+                        <div id="detalle-seccion-horario">
+                            <h6>Horarios</h6>
+                            <div class="form-group">
+                                <button id="detalle-seccion-agregar-horario" class="btn btn-outline-primary">
+                                    <i class="material-icons">add</i>
+                                </button>
+                                &nbsp;
+                                Nuevo horario
+                            </div>
+                            <div id="detalle-seccion-maestro-horarios" class="list-group">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button id="detalle-seccion-aceptar" type="button" class="btn btn-primary" disabled="true">Aceptar</button>
+                        <button id="detalle-seccion-cancelar" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="detalle-horario" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 id="detalle-horario-titulo" class="modal-title">Horario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body" style="max-height:520px;overflow-y:auto">
+                        <div class="form-group">
+                            <label>Día</label>
+                            <select id="detalle-horario-dia" class="form-control">
+                                <option value="1">Lunes</option><option value="2">Martes</option><option value="3">Miércoles</option>
+                                <option value="4">Jueves</option><option value="5">Viernes</option><option value="6">Sábado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Aula</label>
+                            <select id="detalle-horario-aula" class="form-control">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Inicio</label>
+                            <div class="form-inline">
+                                <input id="detalle-horario-inicio" class="form-control" type="number" value="7" max="19" min="7"/>
+                                <span>:00</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Fin</label>
+                            <div class="form-inline">
+                                <input id="detalle-horario-fin" class="form-control" type="number" value="8" max="20" min="8" />
+                                <span>:00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button id="detalle-horario-aceptar" type="button" class="btn btn-primary" disabled="true">Aceptar</button>
+                        <button id="detalle-horario-cancelar" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

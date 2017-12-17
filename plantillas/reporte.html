@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es-HN">
+    <head>
+        <meta charset="utf-8">
+        <title>Asesoría</title>
+        <style>
+            * {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+            }
+
+            td {
+                white-space: nowrap;
+                border: 1px solid black;
+            }
+        
+            #logo {
+                float: right;
+                max-width: 150px;
+            }
+        </style>
+        <script>
+            var datos = Object();
+
+            var reporteCatedratico = function() {
+                const tabla = document.getElementById('tabla');
+                const catedratico = document.getElementById('catedratico');
+                const conclusion = document.getElementById('conclusion');
+
+                const solicitud = new XMLHttpRequest();
+                solicitud.open('GET', '../registro.php?catedratico=' + datos._catedratico);
+                solicitud.onreadystatechange = () => {
+                    if (solicitud.readyState === XMLHttpRequest.DONE && solicitud.status === 200) {
+                        const registros = JSON.parse(solicitud.responseText);
+                        let totalCatedratico = 0;
+                        const totalSeccion = {
+                            seccion: registros[0].seccion.id,
+                            total: 0
+                        }
+
+                        const nombreCatedratico = registros[0].seccion.catedratico.nombre + ' ' + registros[0].seccion.catedratico.apellido
+                        catedratico.appendChild(document.createTextNode(nombreCatedratico));
+
+                        registros.forEach(_registro => {
+                            if (_registro.seccion.id !== totalSeccion.seccion) {
+                                generarTotal(totalSeccion, tabla, _registro);
+                            }
+
+                            const tiempo = _registro.salida - _registro.entrada
+                            totalSeccion.total += tiempo;
+                            totalCatedratico += tiempo;
+
+                            const _entrada = new Date(_registro.entrada * 1000);
+                            //_entrada.setUTCSeconds(_registro.entrada);
+                            const _salida = new Date(_registro.salida * 1000);
+                            //_salida.setUTCSeconds(_registro.salida);
+
+                            const clase = document.createElement('td');
+                            clase.appendChild(document.createTextNode(_registro.seccion.clase.nombre));
+                            const seccion = document.createElement('td');
+                            seccion.appendChild(document.createTextNode(_registro.seccion.letra));
+                            const aula = document.createElement('td');
+                            aula.appendChild(document.createTextNode(_registro.aula.nombre));
+                            const fecha = document.createElement('td');
+                            fecha.appendChild(document.createTextNode(_entrada.toLocaleDateString('es-HN', { month: 'long', day: 'numeric', year: 'numeric'})));
+                            const entrada = document.createElement('td');
+                            entrada.appendChild(document.createTextNode(_entrada.toLocaleTimeString('es-HN')));
+                            const salida = document.createElement('td');
+                            salida.appendChild(document.createTextNode(_salida.toLocaleTimeString('es-HN')));
+                            const fila = document.createElement('tr');
+                            fila.appendChild(clase);
+                            fila.appendChild(seccion);
+                            fila.appendChild(aula);
+                            fila.appendChild(fecha);
+                            fila.appendChild(entrada);
+                            fila.appendChild(salida);
+                            tabla.appendChild(fila);
+                        });
+                        generarTotal(totalSeccion, tabla);
+
+                        const totalHoras = new Date(totalCatedratico * 1000);
+                        const stringHoras = totalHoras.toLocaleTimeString('es-HN', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC' })
+                        conclusion.appendChild(document.createTextNode('En total el catedratico ' + nombreCatedratico + ' ha impartido un total de ' + stringHoras + ' horas'));
+                    }
+                }
+                solicitud.send();
+            }
+
+            var generarTotal = function(totalSeccion, tabla, _registro) {
+                const fecha = new Date(totalSeccion.total * 1000);
+                const labelTotal = document.createElement('th');
+                labelTotal.appendChild(document.createTextNode('Total'));
+                labelTotal.colSpan = 4;
+                const total = document.createElement('th');
+                total.appendChild(document.createTextNode(fecha.toLocaleTimeString('es-HN', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC'})));
+                total.colSpan = 2;
+                const fila = document.createElement('tr');
+                fila.appendChild(labelTotal);
+                fila.appendChild(total);
+                fila.style.textAlign = 'right';
+                tabla.appendChild(fila);
+                if (_registro) {
+                    totalSeccion.seccion = _registro.seccion;
+                    totalSeccion.total = 0;
+                }
+            }
+        </script>
+    </head>
+
+    <body>
+        <div>
+            <div id="encabezado">
+                <img id="logo" src="../recursos/logo.png" />
+                <h1>Universidad José Cecilio del Valle</h1>
+                <h2>Reporte de entradas y salidas</h2>
+                <h3>Datos</h3>
+                <span>Catedratico: </span><span id="catedratico"></span>
+            </div>
+            <br>
+            <div id="clases">
+                <table id="tabla" style="border-collapse: collapse;border: 1px solid black">
+                    <thead>
+                        <th>Clase</th>
+                        <th>Seccion</th>
+                        <th>Aula</th>
+                        <th>Fecha</th>
+                        <th>Entrada</th>
+                        <th>Salida</th>
+                    </thead>
+                </table>
+            </div>
+            <br>
+            <br>
+            <br>
+            <span id="conclusion"></span>
+        </div>
+    </body>
+</html>

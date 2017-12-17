@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es-HN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="http://code.gijgo.com/1.6.1/css/gijgo.css" rel="stylesheet" type="text/css" />
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        <script src="http://code.gijgo.com/1.6.1/js/gijgo.js" type="text/javascript"></script>
+        <script src="persona.js"></script>
+
+        <title>UJCV</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1 class="display-4">Persona</h1>
+
+            <div class="row">
+                <div class="col-2">
+                    <button id="boton-agregar" class="btn btn-primary" type="button">
+                        Agregar
+                    </button>
+                </div>
+                <div class="col-6"></div>
+                <div class="col-4">
+                    <!--input id="filtro" class="form-control" type="text" placeholder="Buscar"/-->
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div id="maestro-persona" class="list-group col-12">
+                </div>
+            </div>
+        </div>
+
+        <div id="detalle-persona" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 id="detalle-persona-titulo" class="modal-title">Persona</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Identidad</label>
+                            <input id="detalle-persona-identidad" class="form-control" type="text" placeholder="Identidad" />
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input id="detalle-persona-nombre" class="form-control" type="text" placeholder="Nombre" />
+                        </div>
+                        <div class="form-group">
+                            <label>Apellido</label>
+                            <input id="detalle-persona-apellido" class="form-control" type="text" placeholder="Apellido" />
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button id="detalle-persona-aceptar" type="button" class="btn btn-primary" disabled="true">Aceptar</button>
+                        <button id="detalle-persona-cancelar" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
